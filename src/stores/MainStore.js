@@ -10,8 +10,18 @@ const MainStore = types
   })
   .actions((self) => {
     return {
-      addBox(box) {
-        self.boxes.push(box);
+      addBox() {
+        const randomLeft = Math.floor(Math.random() * 1000);
+        const randomTop = Math.floor(Math.random() * 475);
+
+        const newBox = BoxModel.create({
+          id: uuid(),
+          color: getRandomColor(),
+          left: randomLeft,
+          top: randomTop,
+        });
+
+        self.boxes.push(newBox);
       },
       removeSelectedBox() {
         if (self.selectedBox) {

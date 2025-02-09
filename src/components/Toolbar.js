@@ -5,7 +5,7 @@ import store from "../stores/MainStore";
 function Toolbar() {
   return (
     <div className="toolbar">
-      <button>Add Box</button>
+      <button onClick={store.addBox}>Add Box</button>
       <button
         onClick={() => {
           store.removeSelectedBox();

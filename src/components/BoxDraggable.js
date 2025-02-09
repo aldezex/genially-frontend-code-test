@@ -12,6 +12,7 @@ function BoxDraggable(props) {
         width: props.width,
         height: props.height,
         transform: `translate(${props.left}px, ${props.top}px)`,
+        ...(props.selected && { border: "2px solid red" }),
       }}
     >
       {props.children}

@@ -10,14 +10,8 @@ function Box(props) {
   const isSelected = props.store.selectedBox === props.box;
 
   return (
-    <BoxDraggable {...props} onClick={handleClick}>
-      <div
-        style={{
-          border: isSelected ? "2px solid blue" : "none",
-        }}
-      >
-        Box
-      </div>
+    <BoxDraggable {...props} selected={isSelected} onClick={handleClick}>
+      <div>Box</div>
     </BoxDraggable>
   );
 }

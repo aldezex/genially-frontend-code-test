@@ -12,6 +12,11 @@ const MainStore = types
   })
   .actions((self) => {
     return {
+      clear() {
+        self.boxes.clear();
+        self.selectedBoxes.clear();
+        self.saveState();
+      },
       addBox() {
         const randomLeft = Math.floor(Math.random() * 1000);
         const randomTop = Math.floor(Math.random() * 475);

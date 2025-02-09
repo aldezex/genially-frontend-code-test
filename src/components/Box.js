@@ -7,7 +7,7 @@ function Box(props) {
     props.store.selectBox(props.box);
   }
 
-  const isSelected = props.store.selectedBox === props.box;
+  const isSelected = props.store.isBoxSelected(props.box);
 
   return (
     <BoxDraggable {...props} selected={isSelected} onClick={handleClick}>

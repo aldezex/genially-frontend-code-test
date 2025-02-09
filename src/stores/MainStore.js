@@ -6,7 +6,7 @@ import getRandomColor from "../utils/getRandomColor";
 const MainStore = types
   .model("MainStore", {
     boxes: types.array(BoxModel),
-    selectedBox: types.maybeNull(types.reference(BoxModel)),
+    selectedBoxes: types.array(types.reference(BoxModel)),
   })
   .actions((self) => {
     return {
@@ -23,32 +23,43 @@ const MainStore = types
 
         self.boxes.push(newBox);
       },
-      removeSelectedBox() {
-        if (self.selectedBox) {
-          self.boxes.remove(self.selectedBox);
-          self.selectedBox = null;
-        }
+      removeSelectedBoxes() {
+        self.selectedBoxes.forEach((box) => {
+          self.boxes.remove(box);
+        });
+
+        self.selectedBoxes.clear();
       },
       selectBox(box) {
-        self.selectedBox = box;
-      },
-      changeSelectedBoxColor(color) {
-        if (self.selectedBox) {
-          self.selectedBox.color = color;
+        if (self.selectedBoxes.includes(box)) {
+          self.selectedBoxes.remove(box);
+        } else {
+          self.selectedBoxes.push(box);
         }
+      },
+      changeSelectedBoxesColor(color) {
+        self.selectedBoxes.forEach((box) => {
+          box.color = color;
+        });
       },
     };
   })
   .views((self) => ({
-    get hasSelectedBox() {
-      return self.selectedBox !== null;
+    get hasSelectedBoxes() {
+      return self.selectedBoxes.length > 0;
     },
-    get selectedBoxColor() {
-      if (self.selectedBox) {
-        return self.selectedBox.color;
+    get selectedBoxesCount() {
+      return self.selectedBoxes.length;
+    },
+    get selectedBoxesColor() {
+      if (self.selectedBoxes.length === 0) {
+        return "#000000";
       }
 
-      return "#000000";
+      return self.selectedBoxes[0].color;
+    },
+    isBoxSelected(box) {
+      return self.selectedBoxes.includes(box);
     },
   }));
 

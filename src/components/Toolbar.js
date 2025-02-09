@@ -8,22 +8,24 @@ function Toolbar() {
       <button onClick={store.addBox}>Add Box</button>
       <button
         onClick={() => {
-          store.removeSelectedBox();
+          store.removeSelectedBoxes();
         }}
-        disabled={!store.hasSelectedBox}
+        disabled={!store.hasSelectedBoxes}
       >
         Remove Box
       </button>
       <input
         type="color"
-        value={store.selectedBoxColor}
+        value={store.selectedBoxesColor}
         onChange={(e) => {
-          store.changeSelectedBoxColor(e.target.value);
+          store.changeSelectedBoxesColor(e.target.value);
         }}
-        disabled={!store.hasSelectedBox}
+        disabled={!store.hasSelectedBoxes}
       />
       <span>
-        {store.hasSelectedBox ? "1 box selected" : "No boxes selected"}
+        {store.selectedBoxesCount === 0
+          ? "No boxes selected"
+          : `${store.selectedBoxesCount} box${store.selectedBoxesCount > 1 ? "es" : ""} selected`}
       </span>
     </div>
   );

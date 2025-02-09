@@ -1,5 +1,7 @@
 import { types } from "mobx-state-tree";
 import uuid from "uuid/v4";
+import { UndoManager } from "mst-middlewares";
+
 import BoxModel from "./models/Box";
 import getRandomColor from "../utils/getRandomColor";
 
@@ -101,5 +103,12 @@ const MainStore = types
   }));
 
 const store = MainStore.create();
+
+const undoManager = UndoManager.create({}, { targetStore: store });
+
+store.undo = () => undoManager.undo();
+store.redo = () => undoManager.redo();
+store.canUndo = () => undoManager.canUndo;
+store.canRedo = () => undoManager.canRedo;
 
 export default store;

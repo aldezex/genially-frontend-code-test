@@ -22,6 +22,12 @@ function Toolbar() {
         }}
         disabled={!store.hasSelectedBoxes}
       />
+      <button onClick={store.undo} disabled={!store.canUndo()}>
+        Undo
+      </button>
+      <button onClick={store.redo} disabled={!store.canRedo()}>
+        Redo
+      </button>
       <span>
         {store.selectedBoxesCount === 0
           ? "No boxes selected"

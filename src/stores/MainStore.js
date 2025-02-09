@@ -22,6 +22,8 @@ const MainStore = types
         });
 
         self.boxes.push(newBox);
+
+        self.saveState();
       },
       removeSelectedBoxes() {
         self.selectedBoxes.forEach((box) => {
@@ -29,6 +31,8 @@ const MainStore = types
         });
 
         self.selectedBoxes.clear();
+
+        self.saveState();
       },
       selectBox(box) {
         if (self.selectedBoxes.includes(box)) {
@@ -36,15 +40,44 @@ const MainStore = types
         } else {
           self.selectedBoxes.push(box);
         }
+
+        self.saveState();
       },
       changeSelectedBoxesColor(color) {
         self.selectedBoxes.forEach((box) => {
           box.color = color;
         });
+
+        self.saveState();
       },
       updateBoxPosition(box, dx, dy) {
         box.left += dx;
         box.top += dy;
+
+        self.saveState();
+      },
+      saveState() {
+        const state = {
+          boxes: self.boxes.toJSON(),
+          selectedBoxes: self.selectedBoxes.map((box) => box.id),
+        };
+
+        localStorage.setItem("canvasState", JSON.stringify(state));
+      },
+      loadState() {
+        const state = JSON.parse(localStorage.getItem("canvasState"));
+
+        if (state) {
+          self.boxes.replace(state.boxes);
+          self.selectedBoxes.replace(
+            state.selectedBoxes.map((id) =>
+              self.boxes.find((box) => box.id === id),
+            ),
+          );
+        }
+      },
+      afterCreate() {
+        self.loadState();
       },
     };
   })
@@ -68,14 +101,5 @@ const MainStore = types
   }));
 
 const store = MainStore.create();
-
-const box1 = BoxModel.create({
-  id: uuid(),
-  color: getRandomColor(),
-  left: 0,
-  top: 0,
-});
-
-store.addBox(box1);
 
 export default store;

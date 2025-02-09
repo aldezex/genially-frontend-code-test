@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import BoxDraggable from "./BoxDraggable";
 
 function Box(props) {
-  function handleClick() {
+  function handleClick(event) {
     props.store.selectBox(props.box);
   }
 

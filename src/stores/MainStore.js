@@ -42,6 +42,10 @@ const MainStore = types
           box.color = color;
         });
       },
+      updateBoxPosition(box, dx, dy) {
+        box.left += dx;
+        box.top += dy;
+      },
     };
   })
   .views((self) => ({

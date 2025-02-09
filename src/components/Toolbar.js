@@ -12,7 +12,7 @@ function Toolbar() {
         }}
         disabled={!store.hasSelectedBoxes}
       >
-        Remove Box
+        {store.selectedBoxesCount < 2 ? "Remove Box" : "Remove Boxes"}
       </button>
       <input
         type="color"

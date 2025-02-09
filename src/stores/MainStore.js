@@ -22,11 +22,23 @@ const MainStore = types
       selectBox(box) {
         self.selectedBox = box;
       },
+      changeSelectedBoxColor(color) {
+        if (self.selectedBox) {
+          self.selectedBox.color = color;
+        }
+      },
     };
   })
   .views((self) => ({
     get hasSelectedBox() {
       return self.selectedBox !== null;
+    },
+    get selectedBoxColor() {
+      if (self.selectedBox) {
+        return self.selectedBox.color;
+      }
+
+      return "#000000";
     },
   }));
 

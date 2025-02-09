@@ -14,7 +14,14 @@ function Toolbar() {
       >
         Remove Box
       </button>
-      <input type="color" />
+      <input
+        type="color"
+        value={store.selectedBoxColor}
+        onChange={(e) => {
+          store.changeSelectedBoxColor(e.target.value);
+        }}
+        disabled={!store.hasSelectedBox}
+      />
       <span>
         {store.hasSelectedBox ? "1 box selected" : "No boxes selected"}
       </span>
